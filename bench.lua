@@ -1,7 +1,12 @@
 local mojibake =  require 'mojibake'
 
-local bit = require "bit"
-local tobit, tohex, bnot, band, bor, bxor, lshift, rshift, arshift, rol, ror, bswap=bit.tobit, bit.tohex, bit.bnot, bit.band, bit.bor, bit.bxor, bit.lshift, bit.rshift, bit.arshift, bit.rol, bit.ror, bit.bswap
+ --use "bit" library if available (luajit and external), "bit32" if not (lua 5.2)
+local bit_library_loaded,bit = pcall(require, "bit")
+if not bit_library_loaded then
+	bit = require "bit32"
+end
+local bnot, band, bor, bxor, lshift, rshift=bit.bnot, bit.band, bit.bor, bit.bxor, bit.lshift, bit.rshift
+
 
 function readfile(filename)
 	local f = io.open(filename, "rb");
