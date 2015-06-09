@@ -16704,11 +16704,11 @@ local function decompose( options, str, dst ,str_offset, str_end )
     local boundclass = BOUNDCLASS_START;
     local null_terminated = (0 ~= band(options, NULLTERM))
 
-    while  (rpos <= str_end) do
+    while (rpos <= str_end) do
       num_bytes,uc = iterate(str, rpos)
       rpos = rpos+num_bytes 
       if (null_terminated and uc == 0) then break; end -- the input ended with a 0, so that's what nullterm means
-      dst,boundclass = decompose_char(uc,  options, dst, boundclass );
+      dst,boundclass = decompose_char(uc, options, dst, boundclass );
     end
   end
   if (0 ~= band(options, bor(COMPOSE,DECOMPOSE)) ) then
@@ -16762,14 +16762,14 @@ local FORMAT_ARRAY_OF_BYTE_STRINGS='array of byte strings'
 local FORMAT_ARRAY_OF_CODEPOINT_STRINGS='array of codepoint strings'
 local FORMAT_ARRAY_OF_GRAPHEME_STRINGS='array of grapheme strings'
 
-local function compose(buffer,  options)
+local function compose(buffer, options)
 --[[  /* NULLTERM option will be ignored, 'length' is never ignored
      ASSERT: 'buffer' has one spare byte of free space at the end! */
 --]]
   local length = #buffer
   if 0 ~= band(options, bor(NLF2LS, NLF2PS, STRIPCC)) then
     local wpos = 1;
-    local  rpos=1;
+    local rpos=1;
     while rpos <= length do
       local uc = buffer[rpos]
       if (uc == 0x000D and rpos < length and buffer[rpos+1] == 0x000A) then rpos=rpos+1; end
@@ -16811,7 +16811,7 @@ local function compose(buffer,  options)
     local max_combining_class = -1;
     local wpos = 1;
     local composition;
-    local  rpos=1;
+    local rpos=1;
     
     while (rpos <= length) do
       current_char = buffer[rpos];
@@ -16884,7 +16884,7 @@ local function compose(buffer,  options)
 end
 
 
-local function reencode(buffer,  format) 
+local function reencode(buffer, format) 
     if format == FORMAT_CODEPOINTS then return buffer end
     
     local dest = {};
